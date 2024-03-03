@@ -47,12 +47,19 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       --circle-shadow-active: 0 0 30px 10px rgba(146, 104, 246, 0.3), inset 0 0 10px rgba(0, 0, 0, 0.7);
       --text-color: #fff;
       --text-margin-top: 12px;
-      --text-font-size: 18px;
-      --font-family: 'Outfit', sans-serif; /* Assuming 'Outfit' is the font family */
-      --font-weight-medium: 500; /* Medium weight, adjust as needed */
-      --letter-spacing: -0.02em;
-      --line-height: 1.4em;
-      --paragraph-spacing: 20px;
+      --text-font-size: 18px; /* Adjusted to match Framer's paragraph style */
+      --font-family: 'Outfit', sans-serif; /* Adjusted to match Framer's font */
+      --font-weight-medium: 500; /* Medium weight for 'Outfit' */
+      --letter-spacing: -0.02em; /* Matching Framer's letter spacing */
+      --line-height: 1.4em; /* Matching Framer's line height */
+      --paragraph-spacing: 20px; /* Adjusted for consistency */
+    }
+    
+    #voice-assistant {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
     
     #voice-assistant #circle {
@@ -68,18 +75,22 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       display: block;
       animation: hover 3s infinite;
     }
+    
     #voice-assistant #circle:hover {
       filter: brightness(1);
       box-shadow: var(--circle-shadow-hover);
     }
+    
     #voice-assistant #circle.loading {
       animation: pulse 1.5s infinite;
     }
+    
     #voice-assistant #circle.active {
       background: var(--circle-background-active);
       box-shadow: var(--circle-shadow-active);
       filter: brightness(1);
     }
+    
     #voice-assistant #helper-text {
       text-align: center;
       margin-top: var(--text-margin-top);
@@ -91,13 +102,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
       line-height: var(--line-height);
       margin-bottom: var(--paragraph-spacing);
     }
+    
     @keyframes hover {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-5px); }
     }
+    
     @keyframes pulse {
       0% { box-shadow: 0 0 0 0 var(--accent-color-base); }
       70% { box-shadow: 0 0 0 10px transparent; }
       100% { box-shadow: 0 0 0 0 transparent; }
-    }    
+    }
     `,document.head.appendChild(v)}function u(){const v=document.createElement("div");return v.id="circle",e.appendChild(v),v}function l(){const v=document.createElement("div");return v.id="helper-text",v.textContent="Tap to activate.",e.appendChild(v),v}function d({isLoading:v=!1,isCalling:w=!1,error:b=null}){i.classList.toggle("loading",v),i.classList.toggle("active",w&&!v),v?o.textContent="One sec..":w?o.textContent="Turn volume up and speak.":b?o.textContent=`Error: ${b.message}`:(o.textContent="Tap to activate.",i.style.transform="",i.style.filter="")}async function p(){const v=i.classList.contains("loading"),w=i.classList.contains("active");if(!v)if(d({isLoading:!0}),w)try{await r.stop(),d({isCalling:!1})}catch(b){d({error:b})}else try{await r.start(n),d({isCalling:!0})}catch(b){d({error:b})}}function g(){i.addEventListener("click",p),r.on("volume-level",v=>{const w=1+v*.5;i.style.transform=`scale(${w})`,i.style.filter=`brightness(${.8+v*.2})`}),r.on("error",v=>d({error:v}))}})})();
